@@ -352,5 +352,7 @@ tags:
     description: 'NFCタグにより取得した情報を受け取るAPI'
   - name: Web
     description: 'ログや履歴の情報をWebアプリケーションへ渡すAPI'
+  - name: Group
+    description: "日程調整のグループに関わるエンドポイント"
   - name: System
     description: 'システムに関わるAPI'
