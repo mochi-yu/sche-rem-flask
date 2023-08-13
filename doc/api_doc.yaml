@@ -48,51 +48,8 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  groupID:
-                    type: string
-                    description: グループのID
-                  groupName:
-                    type: string
-                    description: 日程調整の名前
-                  author:
-                    type: string
-                    description: 日程調整の作成者
-                  groupUsers:
-                    type: array
-                    items:
-                      type: string
-                      description: "参加者のメールアドレス"
-                      example: "sample@example.com"
-                    description: 日程調整の参加者の一覧
-                  schedules:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        userMailAddress:
-                          type: string
-                          description: ユーザのメールアドレス
-                        scheduleInfo:
-                          description: "ユーザが入力したスケジュールの情報"
-                          type: array
-                          items:
-                            type: array
-                            items:
-                              type: boolean
-                  startDay:
-                    type: string
-                    description: 日程調整の開始日
-                  endDat:
-                    type: string
-                    description: 日程調整の終了日
-                  startHour:
-                    type: string
-                    description: 日程調整の開始時刻
-                  endHour:
-                    type: string
-                    description: 日程調整の終了時刻
+                $ref: '#/components/schemas/GroupInfo'
+
 
   "/tag":
     post:
