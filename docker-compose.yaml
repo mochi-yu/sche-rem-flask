@@ -1,0 +1,40 @@
+version: '3'
+services:
+  mysql:
+    container_name: ScheRem-mysql
+    build:
+      dockerfile: docker/mysql/Dockerfile
+      context: .
+    volumes:
+      - mysql_data:/var/lib/mysql
+    env_file:
+      - .env
+    ports:
+      - "3306:3306"
+    networks:
+      - app-net
+
+  backend:
+    container_name: ScheRem-backend
+    build:
+      dockerfile: docker/backend/Dockerfile
+      context: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - type: bind
+        source: ./
+        target: /app
+    # command: python ./backend/main.py
+    tty: true
+    networks:
+      - app-net
+    depends_on:
+      - mysql
+
+volumes:
+  mysql_data:
+
+networks:
+  app-net:
+    driver: bridge
