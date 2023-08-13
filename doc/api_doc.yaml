@@ -1,11 +1,99 @@
 openapi: 3.0.0
 info:
-  title: 'Flow Visu'
-  version: '1.1'
-  description: '2023年度 技育CAMPキャラバン in 金沢にて作成したイベント人流管理アプリのAPIドキュメント'
+  title: 'Sche Rem'
+  version: '1.0'
+  description: 'Open HackU 2023 Nagoyaにて作成したSche RemのAPIドキュメント'
 servers:
   - url: 'http://example.com'
 paths:
+  "/group":
+    post:
+      summary: "日程調整のグループを作成する"
+      tags:
+        - Group
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                groupName:
+                  type: string
+                  description: 日程調整の名前
+                author:
+                  type: string
+                  description: 日程調整の作成者
+                groupUsers:
+                  type: array
+                  items:
+                    type: string
+                    description: "参加者のメールアドレス"
+                    example: "sample@example.com"
+                  description: 日程調整の参加者の一覧
+                startDay:
+                  type: string
+                  description: 日程調整の開始日
+                endDat:
+                  type: string
+                  description: 日程調整の終了日
+                startHour:
+                  type: string
+                  description: 日程調整の開始時刻
+                endHour:
+                  type: string
+                  description: 日程調整の終了時刻
+      responses:
+        '200':
+          description: '正常に新しいグループを作成'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  groupID:
+                    type: string
+                    description: グループのID
+                  groupName:
+                    type: string
+                    description: 日程調整の名前
+                  author:
+                    type: string
+                    description: 日程調整の作成者
+                  groupUsers:
+                    type: array
+                    items:
+                      type: string
+                      description: "参加者のメールアドレス"
+                      example: "sample@example.com"
+                    description: 日程調整の参加者の一覧
+                  schedules:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        userMailAddress:
+                          type: string
+                          description: ユーザのメールアドレス
+                        scheduleInfo:
+                          description: "ユーザが入力したスケジュールの情報"
+                          type: array
+                          items:
+                            type: array
+                            items:
+                              type: boolean
+                  startDay:
+                    type: string
+                    description: 日程調整の開始日
+                  endDat:
+                    type: string
+                    description: 日程調整の終了日
+                  startHour:
+                    type: string
+                    description: 日程調整の開始時刻
+                  endHour:
+                    type: string
+                    description: 日程調整の終了時刻
+
   "/tag":
     post:
       summary: "センサやスマホアプリから、NFCより取得した情報を受け取る"
