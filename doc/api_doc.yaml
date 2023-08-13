@@ -70,6 +70,40 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GroupInfo'
+  
+    post:
+      summary: "ユーザが日程調整に入力する"
+      description: "groupIdで指定したグループに日程を回答する"
+      tags:
+        - "Group"
+      parameters:
+        - in: path
+          name: groupId
+          schema:
+            type: string
+          required: true
+          description: "日程を回答するグループのgroupId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userName:
+                  type: string
+                  description: "任意入力のユーザ名"
+                userMailAddress:
+                  type: string
+                  description: "ユーザのメールアドレス。メールアドレスで招待された人は必要"
+                scheduleInfo:
+                  $ref: '#/components/schemas/ScheduleInfo'
+      responses:
+        '200':
+          description: "回答したグループの日程を取得する"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupInfo'
 
   "/tag":
     post:
