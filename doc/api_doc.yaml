@@ -50,6 +50,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/GroupInfo'
 
+  "/group/{groupId}":
+    get:
+      summary: "日程調整のグループの情報を取得する"
+      tags:
+        - "Group"
+      parameters:
+        - in: path
+          name: groupId
+          schema:
+            type: string
+          required: true
+          description: "groupIdで指定したグループの情報を取得する"
+      responses:
+        '200':
+          description: "指定したグループの情報を返却"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupInfo'
 
   "/tag":
     post:
