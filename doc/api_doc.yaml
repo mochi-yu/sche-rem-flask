@@ -53,6 +53,7 @@ paths:
   "/group/{groupId}":
     get:
       summary: "日程調整のグループの情報を取得する"
+      description: "groupIdで指定したグループの情報を取得する"
       tags:
         - "Group"
       parameters:
@@ -61,7 +62,7 @@ paths:
           schema:
             type: string
           required: true
-          description: "groupIdで指定したグループの情報を取得する"
+          description: "情報を取得するグループのgroupId"
       responses:
         '200':
           description: "指定したグループの情報を返却"
