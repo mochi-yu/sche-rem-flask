@@ -31,7 +31,7 @@ groups = []
 # GETメソッドでは、特定の groupId に対応するグループ情報を返します。POSTメソッドでは、特定の groupId に対応するグループに日程回答を追加します。
 
 @app.route('/group/<string:groupId>', methods=['GET', 'POST'])
-def group(groupId):
+def group1(groupId):
     if request.method == 'GET':
         # groupIdに基づいて対応するグループを探す処理を行う
         for existing_group in groups:
@@ -61,4 +61,4 @@ def ping():
     return jsonify({"message": "pong"}), 200
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False, host='0.0.0.0', port=5001)
