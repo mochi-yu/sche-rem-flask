@@ -8,3 +8,11 @@ CREATE TABLE GroupInformation (
     EndHour VARCHAR(255) NOT NULL,
     PRIMARY KEY (GroupID)
 );
+
+-- 2つ目の参加者情報テーブル
+CREATE TABLE PerticipantInformation (
+　RefID VARCHAR(255) NOT NULL,
+    GroupID VARCHAR(255) NOT NULL,
+    Email VARCHAR(255) NOT NULL,
+    PRIMARY KEY (RefID)
+);
