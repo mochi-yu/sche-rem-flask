@@ -10,11 +10,11 @@ connection = pymysql.connect(host='ScheRem-mysql',
  
 with connection:
     with connection.cursor() as cursor:
-        # データ読み込み
-        sql = "SELECT `GroupID`, `GroupName`, `Author`, `StartDay`, `EndDay`, `StartHour`, `EndHour` FROM `GroupInformation` WHERE `GroupID`=%s"
+        # データ削除
+        sql = "DELETE FROM `GroupInformation` WHERE `GroupID` = %s"
         cursor.execute(sql, ('ABCDEFGH'))
-        result = cursor.fetchone()
-        print(result)
+        connection.commit()
+        print(cursor.rowcount, 'rows deleted')
 
 # 終了処理
 cursor.close()
