@@ -4,7 +4,7 @@ info:
   version: '1.0'
   description: 'Open HackU 2023 Nagoyaにて作成したSche RemのAPIドキュメント'
 servers:
-  - url: 'http://example.com'
+  - url: 'http://localhost:5001'
 paths:
   "/group":
     post:
@@ -30,17 +30,17 @@ paths:
                     description: "参加者のメールアドレス"
                     example: "sample@example.com"
                   description: 日程調整の参加者の一覧
-                startDay:
+                startDate:
                   type: string
                   description: 日程調整の開始日
-                endDat:
+                endDate:
                   type: string
                   description: 日程調整の終了日
                 startHour:
-                  type: string
+                  type: number
                   description: 日程調整の開始時刻
                 endHour:
-                  type: string
+                  type: number
                   description: 日程調整の終了時刻
       responses:
         '200':
@@ -183,17 +183,17 @@ components:
                 description: ユーザのメールアドレス
               scheduleInfo:
                 $ref: '#/components/schemas/ScheduleInfo'
-        startDay:
+        startDate:
           type: string
           description: 日程調整の開始日
-        endDat:
+        endDate:
           type: string
           description: 日程調整の終了日
         startHour:
-          type: string
+          type: number
           description: 日程調整の開始時刻
         endHour:
-          type: string
+          type: number
           description: 日程調整の終了時刻
     
     ScheduleInfo:

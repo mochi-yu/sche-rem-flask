@@ -1,7 +1,9 @@
 import mysql.connector
+from models.create_group_request_param import CreateGroupRequestParam
+from models.group_info import GroupInfo
 from setting import *
 
-def connectDB():
+def _connectDB():
     # DBに接続
     cnx = mysql.connector.connect(
         database=MYSQL_DATABASE,
@@ -13,14 +15,14 @@ def connectDB():
     if cnx.is_connected:
         print("database connected.")
 
-    cursor = cnx.cursor(buffered=True)
+    cursor = cnx.cursor(buffered=True, dictionary=True)
 
     return cursor, cnx
 
 
 def init_db():
     try:
-        cursor, cnx = connectDB()
+        cursor, cnx = _connectDB()
 
         # GroupInformationデーブルの初期化
         try:
@@ -39,8 +41,8 @@ def init_db():
                     GroupID VARCHAR(255) NOT NULL,
                     GroupName VARCHAR(255) NOT NULL,
                     Author VARCHAR(255) NOT NULL,
-                    StartDay VARCHAR(255) NOT NULL,
-                    EndDay VARCHAR(255) NOT NULL,
+                    StartDate VARCHAR(255) NOT NULL,
+                    EndDate VARCHAR(255) NOT NULL,
                     StartHour int NULL,
                     EndHour int NULL,
                     PRIMARY KEY (GroupID)
@@ -64,7 +66,7 @@ def init_db():
             # GroupInformationテーブルの作成
             sql = '''
                 CREATE TABLE PerticipantInformation (
-                    RefID VARCHAR(255) NOT NULL,
+                    RefID int NOT NULL AUTO_INCREMENT,
                     GroupID VARCHAR(255) NOT NULL,
                     Email VARCHAR(255) NOT NULL,
                     PRIMARY KEY (RefID)
@@ -79,3 +81,5 @@ def init_db():
         if cnx is not None and cnx.is_connected:
             cnx.close()
 
+def insert_group(newGroupInfo: CreateGroupRequestParam) -> GroupInfo:
+    print()
