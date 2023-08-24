@@ -1,23 +1,26 @@
 import mysql.connector
 from setting import *
 
-cnx = None
+def connectDB():
+    # DBに接続
+    cnx = mysql.connector.connect(
+        database=MYSQL_DATABASE,
+        user=MYSQL_USER,
+        password=MYSQL_PASSWORD,
+        host=MYSQL_HOST,
+    )
+
+    if cnx.is_connected:
+        print("database connected.")
+
+    cursor = cnx.cursor(buffered=True)
+
+    return cursor, cnx
+
 
 def init_db():
     try:
-        # DBに接続
-        cnx = mysql.connector.connect(
-            database=MYSQL_DATABASE,
-            user=MYSQL_USER,
-            password=MYSQL_PASSWORD,
-            host=MYSQL_HOST,
-        )
-
-        if cnx.is_connected:
-            print("database connected.")
-
-        cursor = cnx.cursor(buffered=True)
-
+        cursor, cnx = connectDB()
 
         # GroupInformationデーブルの初期化
         try:
