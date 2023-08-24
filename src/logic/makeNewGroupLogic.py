@@ -2,7 +2,7 @@ from models.create_group_request_param import CreateGroupRequestParam
 from models.group_info import GroupInfo
 from database.GroupInformationTable import insert_group
 from database.GroupUserTable import insert_group_users
-from sendEmailLogic import send_emails
+from logic.sendEmailLogic import send_emails
 import uuid
 
 def make_new_group_logic(newGroup: CreateGroupRequestParam):
