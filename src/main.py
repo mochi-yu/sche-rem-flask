@@ -5,6 +5,7 @@ import database.db as db
 from setting import *
 from models.create_group_request_param import CreateGroupRequestParam
 from logic.makeNewGroupLogic import make_new_group_logic
+from logic.getGroupInfoLogic import get_group_info_with_groupID_logic
 
 app = Flask(__name__)
 CORS(app)
@@ -15,28 +16,29 @@ groups = []
 def groupInfo():
     print(request.method)
     if request.method == 'POST':
+        # 新しいグループを作成
         newGroup = CreateGroupRequestParam(**request.json)
-        # newGroup = json.loads(request.get_json(), object_hook=lambda x: CreateGroupRequestParam(**x))
 
         createdGroupInfo = make_new_group_logic(newGroup)
         # print(createdGroupInfo.__dict__)
 
         return jsonify(createdGroupInfo.__dict__), 200
     else:
-        return 
+        return 404
 
-# /group/{groupId} エンドポイントに対するGETとPOSTメソッドの処理を定義しています。
-# GETメソッドでは、特定の groupId に対応するグループ情報を返します。POSTメソッドでは、特定の groupId に対応するグループに日程回答を追加します。
 
 @app.route('/group/<string:groupId>', methods=['GET', 'POST'])
 def groupWithGroupID(groupId):
     if request.method == 'GET':
-        # groupIdに基づいて対応するグループを探す処理を行う
-        for existing_group in groups:
-            if existing_group["groupId"] == groupId:
-                return jsonify(existing_group), 200
-        return jsonify({"message": "Group not found"}), 404
+        # groupIdで指定したグループの情報を取得
+        groupInfo = get_group_info_with_groupID_logic(groupId)
 
+        for i in range(len(groupInfo.schedules)):
+            groupInfo.schedules[i] = groupInfo.schedules[i].__dict__
+
+        print(groupInfo.__dict__)
+
+        return jsonify(groupInfo.__dict__), 200
     elif request.method == 'POST':
         data = request.json
         # groupIdに基づいて対応するグループを探す処理を行う

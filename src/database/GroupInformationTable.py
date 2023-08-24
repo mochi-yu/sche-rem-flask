@@ -42,3 +42,15 @@ def insert_group(newGroup: CreateGroupRequestParam, groupID: str):
         cnx.close()
     
     return createdGroup
+
+def get_group(groupID: str):
+  cursor, cnx = _connectDB()
+
+  sql = '''SELECT * FROM GroupInformation WHERE groupID = %s'''
+  cursor.execute(sql, (groupID, ))
+  groupInfo = cursor.fetchone()
+
+  cursor.close()
+  cnx.close()
+
+  return groupInfo

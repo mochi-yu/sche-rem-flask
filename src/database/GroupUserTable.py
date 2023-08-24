@@ -25,3 +25,15 @@ def insert_group_users(groupUsers: list[str], groupID: int) -> None:
     cnx.close()
 
     return addedUsers
+
+def get_users(groupID):
+    cursor, cnx = _connectDB()
+
+    sql = '''SELECT * FROM PerticipantInformation WHERE groupID = %s'''
+    cursor.execute(sql, (groupID, ))
+    users = cursor.fetchall()
+    
+    cursor.close()
+    cnx.close()
+
+    return users
