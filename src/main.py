@@ -1,8 +1,10 @@
 from setting import *
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import database.db as db
 
 app = Flask(__name__)
+CORS(app)
 
 groups = []
 
