@@ -3,7 +3,7 @@ from models.create_group_request_param import CreateGroupRequestParam
 from models.group_info import GroupInfo
 from setting import *
 
-def _connectDB():
+def _connectDB(isDict = True):
     # DBに接続
     cnx = mysql.connector.connect(
         database=MYSQL_DATABASE,
@@ -15,7 +15,7 @@ def _connectDB():
     if cnx.is_connected:
         print("database connected.")
 
-    cursor = cnx.cursor(buffered=True, dictionary=True)
+    cursor = cnx.cursor(buffered=True, dictionary=isDict)
 
     return cursor, cnx
 
@@ -38,14 +38,14 @@ def init_db():
             # GroupInformationテーブルの作成
             sql = '''
                 CREATE TABLE GroupInformation (
-                    GroupID VARCHAR(255) NOT NULL,
-                    GroupName VARCHAR(255) NOT NULL,
-                    Author VARCHAR(255) NOT NULL,
-                    StartDate VARCHAR(255) NOT NULL,
-                    EndDate VARCHAR(255) NOT NULL,
-                    StartHour int NULL,
-                    EndHour int NULL,
-                    PRIMARY KEY (GroupID)
+                    groupID VARCHAR(255) NOT NULL,
+                    groupName VARCHAR(255) NOT NULL,
+                    author VARCHAR(255) NOT NULL,
+                    startDate VARCHAR(255) NOT NULL,
+                    endDate VARCHAR(255) NOT NULL,
+                    startHour int NULL,
+                    endHour int NULL,
+                    PRIMARY KEY (groupID)
                 );
             '''
             cursor.execute(sql)
@@ -66,9 +66,9 @@ def init_db():
             # GroupInformationテーブルの作成
             sql = '''
                 CREATE TABLE PerticipantInformation (
-                    RefID int NOT NULL AUTO_INCREMENT,
-                    GroupID VARCHAR(255) NOT NULL,
-                    Email VARCHAR(255) NOT NULL,
+                    refID int NOT NULL AUTO_INCREMENT,
+                    groupID VARCHAR(255) NOT NULL,
+                    email VARCHAR(255) NOT NULL,
                     PRIMARY KEY (RefID)
                 );
             '''

@@ -1,35 +1,29 @@
-from setting import *
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import database.db as db
+
+from setting import *
+from models.create_group_request_param import CreateGroupRequestParam
+from logic.makeNewGroupLogic import make_new_group_logic
 
 app = Flask(__name__)
 CORS(app)
 
 groups = []
 
-@app.route('/group', methods=['GET', 'POST'])
+@app.route('/group', methods=['POST'])
 def groupInfo():
-    if request.method == 'GET':
-        return jsonify(groups), 200
-    elif request.method == 'POST':
-        data = request.json
-        new_group = {
-            # ... グループ情報の生成
-            "groupId": len(groups) + 1,
-            "groupName": data["groupName"],
-            "author": data["author"],
-            "groupUsers": data["groupUsers"],
-            "startDay": data["startDay"],
-            "endDay": data["endDay"],
-            "startHour": data["startHour"],
-            "endHour": data["endHour"]  
-        }
-        groups.append(new_group)
-        return jsonify(new_group), 200
+    print(request.method)
+    if request.method == 'POST':
+        newGroup = CreateGroupRequestParam(**request.json)
+        # newGroup = json.loads(request.get_json(), object_hook=lambda x: CreateGroupRequestParam(**x))
 
-# ダミーのデータベースとしてメモリ内のリストを使用
-groups = []
+        createdGroupInfo = make_new_group_logic(newGroup)
+        # print(createdGroupInfo.__dict__)
+
+        return jsonify(createdGroupInfo.__dict__), 200
+    else:
+        return 
 
 # /group/{groupId} エンドポイントに対するGETとPOSTメソッドの処理を定義しています。
 # GETメソッドでは、特定の groupId に対応するグループ情報を返します。POSTメソッドでは、特定の groupId に対応するグループに日程回答を追加します。
@@ -66,4 +60,4 @@ def ping():
 
 if __name__ == '__main__':
     db.init_db()
-    # app.run(debug=False, host='0.0.0.0', port=5001)
+    app.run(debug=False, host='0.0.0.0', port=5001)
