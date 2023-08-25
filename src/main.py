@@ -4,8 +4,10 @@ import database.db as db
 
 from setting import *
 from models.create_group_request_param import CreateGroupRequestParam
+from models.submit_group_request_param import SubmitGroupRequestParam
 from logic.makeNewGroupLogic import make_new_group_logic
 from logic.getGroupInfoLogic import get_group_info_with_groupID_logic
+from logic.submitScheduleLogic import submit_schedule_logic
 
 app = Flask(__name__)
 CORS(app)
@@ -40,20 +42,17 @@ def groupWithGroupID(groupId):
 
         return jsonify(groupInfo.__dict__), 200
     elif request.method == 'POST':
-        data = request.json
-        # groupIdに基づいて対応するグループを探す処理を行う
-        for existing_group in groups:
-            if existing_group["groupId"] == groupId:
-                # ここで日程回答の処理を行う
-                # dataに含まれる情報を使って処理を行うことを想定
-                response_data = {
-                    "userName": data["userName"],
-                    "userMailAddress": data["userMailAddress"],
-                    "scheduleInfo": data["scheduleInfo"]
-                }
-                existing_group["responses"].append(response_data)
-                return jsonify(existing_group), 200
-        return jsonify({"message": "Group not found"}), 404
+        # スケジュールを登録
+        requestParam = SubmitGroupRequestParam(**request.json)
+
+        updatedGroupInfo = submit_schedule_logic(requestParam, groupId)
+
+        for i in range(len(updatedGroupInfo.schedules)):
+            updatedGroupInfo.schedules[i] = updatedGroupInfo.schedules[i].__dict__
+
+        print(updatedGroupInfo.__dict__)
+
+        return jsonify(updatedGroupInfo.__dict__), 200
 
 
 @app.route('/ping', methods=['GET'])

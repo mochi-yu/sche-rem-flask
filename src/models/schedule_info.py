@@ -1,4 +1,9 @@
 class ScheduleInfo:
-    def __init__(self, userMailAddress: str, scheduleInfo: list[list[bool]]) -> None:
-        self.userMailAdress = userMailAddress
-        self.scheduleInfo = scheduleInfo
+    def __init__(self, scheduleInfo) -> None:
+        self.userMailAdress = scheduleInfo["userMailAddress"]
+
+        newScheduleArray = []
+        for i in range(len(scheduleInfo["scheduleInfo"])):
+            newScheduleArray.append(scheduleInfo["scheduleInfo"][str(i)])
+
+        self.scheduleInfo = newScheduleArray

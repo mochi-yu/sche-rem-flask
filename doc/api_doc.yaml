@@ -95,6 +95,7 @@ paths:
                 userMailAddress:
                   type: string
                   description: "ユーザのメールアドレス。メールアドレスで招待された人は必要"
+                  example: "sample@example.com"
                 scheduleInfo:
                   $ref: '#/components/schemas/ScheduleInfo'
       responses:
