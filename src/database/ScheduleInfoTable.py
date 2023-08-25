@@ -21,7 +21,7 @@ sampleData = [
 
 def get_schedules(groupUserRefIDs: list[int]):
     response = requests.post(
-        "http://host.docker.internal:5002/sche-rem/us-central1/getSchedule",
+        "https://us-central1-sche-rem.cloudfunctions.net/getSchedule",
         data={'refIDs': groupUserRefIDs}
     )
 
@@ -33,7 +33,7 @@ def insert_schedule(scheduleInfo: ScheduleInfo, groupUserRefID: int):
         'schedule': scheduleInfo.__dict__
     })
     response = requests.post(
-        "http://host.docker.internal:5002/sche-rem/us-central1/postSchedule",
+        "https://us-central1-sche-rem.cloudfunctions.net/postSchedule",
         json={
             "refID": str(groupUserRefID),
             "schedule": scheduleInfo.__dict__
