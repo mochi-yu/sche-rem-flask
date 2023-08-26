@@ -25,7 +25,7 @@ services:
       - type: bind
         source: ./
         target: /app
-    # command: python ./backend/main.py
+    command: python ./src/main.py
     tty: true
     networks:
       - app-net

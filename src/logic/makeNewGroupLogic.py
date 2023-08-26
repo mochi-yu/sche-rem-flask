@@ -19,7 +19,7 @@ def make_new_group_logic(newGroup: CreateGroupRequestParam):
 以下のリンクからあなたの日程調整を入力してください。
 URL：https://sche-rem.vercel.app/email/{groupID}
     """
-    # send_emails(newGroup.groupUsers, mailTitle, mailBody)
+    send_emails(newGroup.groupUsers, mailTitle, mailBody)
 
     createdGroup["groupUsers"] = newGroup.groupUsers
     createdGroup["schedules"] = []

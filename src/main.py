@@ -50,8 +50,6 @@ def groupWithGroupID(groupId):
         for i in range(len(updatedGroupInfo.schedules)):
             updatedGroupInfo.schedules[i] = updatedGroupInfo.schedules[i].__dict__
 
-        print(updatedGroupInfo.__dict__)
-
         return jsonify(updatedGroupInfo.__dict__), 200
 
 

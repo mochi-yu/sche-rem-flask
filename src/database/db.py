@@ -12,9 +12,6 @@ def _connectDB(isDict = True):
         host=MYSQL_HOST,
     )
 
-    if cnx.is_connected:
-        print("database connected.")
-
     cursor = cnx.cursor(buffered=True, dictionary=isDict)
 
     return cursor, cnx

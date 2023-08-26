@@ -18,7 +18,6 @@ def get_group_info_with_groupID_logic(groupID):
     scheduleInfos: list[ScheduleInfo] = []
     for sche in scheduleInfo:
         scheduleInfos.append(ScheduleInfo(sche))
-    print(scheduleInfos[0].__dict__)
 
     groupInfo["groupUsers"] = groupUserEmails
     groupInfo["schedules"] = scheduleInfos

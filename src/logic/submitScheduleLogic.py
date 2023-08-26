@@ -10,6 +10,8 @@ def submit_schedule_logic(requestParam: SubmitGroupRequestParam, groupID: str) -
     userRefID = 0
 
     groupUsers = get_users(groupID)
+    requestParam.userMailAddress = requestParam.userMailAddress.replace("%40", "@")
+
     print(requestParam.userMailAddress)
 
     for user in groupUsers:
@@ -24,11 +26,11 @@ def submit_schedule_logic(requestParam: SubmitGroupRequestParam, groupID: str) -
     groupInfo = get_group_info_with_groupID_logic(groupID)
     if(len(groupInfo.schedules) == len(groupInfo.groupUsers)):
         print("投票完了")
-#         mailTitle = "全員の入力が完了しました。"
-#         mailBody = """
-# こちらから、みんなの投票状況を確認してください。
-# URL：https://sche-rem.vercel.app/check/{groupID}
-#         """
-#         send_emails(groupInfo.groupUsers[0], mailTitle, mailBody)
+        mailTitle = "全員の入力が完了しました。"
+        mailBody = f"""
+こちらから、みんなの投票状況を確認してください。
+URL：https://sche-rem.vercel.app/check/{groupID}
+        """
+        send_emails(groupInfo.groupUsers[0], mailTitle, mailBody)
 
     return groupInfo

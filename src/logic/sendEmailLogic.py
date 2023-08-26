@@ -15,6 +15,8 @@ def send_emails(sendAdresses: list[str], mailTitle: str, mailBody: str):
 
     login_address = GMAIL_ADDRESS #送信元のメールアドレス
     login_password = GMAIL_APP_PASS #パスワードを入力
+    print(login_password)
+    print(login_address)
 
     server.login(login_address, login_password)
 
@@ -24,7 +26,7 @@ def send_emails(sendAdresses: list[str], mailTitle: str, mailBody: str):
     message["From"] = GMAIL_ADDRESS #送信元のメールアドレス
     message["To"] = ",".join(sendAdresses) #送信先メールアドレス
 
-    text = MIMEText("") #文章絵お入力
+    text = MIMEText(mailBody) #文章絵お入力
     message.attach(text)
 
     server.send_message(message)
