@@ -14,7 +14,7 @@ def make_new_group_logic(newGroup: CreateGroupRequestParam):
 
     # 参加者にメールを送る
     mailTitle = "新しい日程調整が作成されました。"
-    mailBody = """
+    mailBody = f"""
 新しい日程調整が作成されました。
 以下のリンクからあなたの日程調整を入力してください。
 URL：https://sche-rem.vercel.app/email/{groupID}
