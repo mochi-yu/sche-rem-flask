@@ -31,6 +31,6 @@ def submit_schedule_logic(requestParam: SubmitGroupRequestParam, groupID: str) -
 こちらから、みんなの投票状況を確認してください。
 URL：https://sche-rem.vercel.app/check/{groupID}
         """
-        send_emails(groupInfo.groupUsers[0], mailTitle, mailBody)
+        send_emails([groupInfo.groupUsers[0], ], mailTitle, mailBody)
 
     return groupInfo
