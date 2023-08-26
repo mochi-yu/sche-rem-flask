@@ -27,6 +27,7 @@ services:
         target: /app
     command: python ./src/main.py
     tty: true
+    restart: always
     networks:
       - app-net
     depends_on:
