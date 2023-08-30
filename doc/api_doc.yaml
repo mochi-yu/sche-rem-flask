@@ -1,0 +1,213 @@
+openapi: 3.0.0
+info:
+  title: 'Sche Rem'
+  version: '1.0'
+  description: 'Open HackU 2023 Nagoyaにて作成したSche RemのAPIドキュメント'
+servers:
+  - url: 'http://localhost:5001'
+paths:
+  "/group":
+    post:
+      summary: "日程調整のグループを作成する"
+      tags:
+        - Group
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                groupName:
+                  type: string
+                  description: 日程調整の名前
+                author:
+                  type: string
+                  description: 日程調整の作成者
+                groupUsers:
+                  type: array
+                  items:
+                    type: string
+                    description: "参加者のメールアドレス"
+                    example: "sample@example.com"
+                  description: 日程調整の参加者の一覧
+                startDate:
+                  type: string
+                  description: 日程調整の開始日
+                endDate:
+                  type: string
+                  description: 日程調整の終了日
+                startHour:
+                  type: number
+                  description: 日程調整の開始時刻
+                endHour:
+                  type: number
+                  description: 日程調整の終了時刻
+      responses:
+        '200':
+          description: '正常に新しいグループを作成'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupInfo'
+
+  "/group/{groupId}":
+    get:
+      summary: "日程調整のグループの情報を取得する"
+      description: "groupIdで指定したグループの情報を取得する"
+      tags:
+        - "Group"
+      parameters:
+        - in: path
+          name: groupId
+          schema:
+            type: string
+          required: true
+          description: "情報を取得するグループのgroupId"
+      responses:
+        '200':
+          description: "指定したグループの情報を返却"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupInfo'
+  
+    post:
+      summary: "ユーザが日程調整に入力する"
+      description: "groupIdで指定したグループに日程を回答する"
+      tags:
+        - "Group"
+      parameters:
+        - in: path
+          name: groupId
+          schema:
+            type: string
+          required: true
+          description: "日程を回答するグループのgroupId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userName:
+                  type: string
+                  description: "任意入力のユーザ名"
+                userMailAddress:
+                  type: string
+                  description: "ユーザのメールアドレス。メールアドレスで招待された人は必要"
+                  example: "sample@example.com"
+                scheduleInfo:
+                  $ref: '#/components/schemas/ScheduleInfo'
+      responses:
+        '200':
+          description: "回答したグループの日程を取得する"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupInfo'
+
+  '/ping':
+    get:
+      summary: 'GETの疎通確認'
+      tags:
+        - System
+      parameters:
+        - in: query
+          name: name
+          schema:
+            type: string
+          description: '名前'
+      responses:
+        '200':
+          description: '挨拶をレスポンス'
+          content:
+            application/json:
+              schema:
+                type: string
+                description: "挨拶"
+                example: "[GET test] : Hello {name}!!"
+                
+    post:
+      summary: 'POSTの疎通確認'
+      tags:
+        - System
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: '名前'        
+      responses:
+        '200':
+          description: '挨拶をレスポンス'
+          content:
+            application/json:
+              schema:
+                type: string
+                description: "挨拶"
+                example: "[POST test] : Hello {name}!!"
+                
+components:
+  schemas:
+    GroupInfo:
+      title: "GroupInfo"
+      description: "グループの情報"
+
+      type: object
+      properties:
+        groupID:
+          type: string
+          description: グループのID
+        groupName:
+          type: string
+          description: 日程調整の名前
+        author:
+          type: string
+          description: 日程調整の作成者
+        groupUsers:
+          type: array
+          items:
+            type: string
+            description: "参加者のメールアドレス"
+            example: "sample@example.com"
+          description: 日程調整の参加者の一覧
+        schedules:
+          type: array
+          items:
+            type: object
+            properties:
+              userMailAddress:
+                type: string
+                description: ユーザのメールアドレス
+              scheduleInfo:
+                $ref: '#/components/schemas/ScheduleInfo'
+        startDate:
+          type: string
+          description: 日程調整の開始日
+        endDate:
+          type: string
+          description: 日程調整の終了日
+        startHour:
+          type: number
+          description: 日程調整の開始時刻
+        endHour:
+          type: number
+          description: 日程調整の終了時刻
+    
+    ScheduleInfo:
+      title: "ScheduleInfo"
+      description: "各ユーザのスケジュールの情報"
+      type: array
+      items:
+        type: array
+        items:
+          type: boolean
+
+tags: 
+  - name: Group
+    description: "日程調整のグループに関わるエンドポイント"
+  - name: System
+    description: 'システムに関わるAPI'
